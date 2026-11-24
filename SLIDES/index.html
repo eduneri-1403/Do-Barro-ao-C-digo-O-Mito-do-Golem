@@ -1,0 +1,1551 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MIRA | Do Barro ao Código - Iniciação Científica (FFLCH-USP)</title>
+  
+  <!-- Tipografia Nobre e Acadêmica para Apresentação em Telão / Projeção -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800;900&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: #080a0d;
+      --bg-card: rgba(16, 20, 27, 0.88);
+      --border-gold: rgba(226, 183, 104, 0.28);
+      --border-gold-hover: rgba(226, 183, 104, 0.65);
+      --gold-primary: #e2b768;
+      --gold-light: #f7dfa5;
+      --gold-dim: #9e7f43;
+      --amber: #f59e0b;
+      --text-main: #f0f3f8;
+      --text-muted: #a8b5c8;
+      --text-dim: #718096;
+      --accent-glow: rgba(226, 183, 104, 0.16);
+      --font-title: 'Cinzel', serif;
+      --font-quote: 'Cormorant Garamond', serif;
+      --font-body: 'Inter', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      overflow: hidden;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 25%, rgba(30, 38, 54, 0.5) 0%, rgba(8, 10, 13, 0.96) 80%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Cabeçalho Institucional USP / FFLCH com Discente e Orientador */
+    header.mira-header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 72px;
+      padding: 0 2.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(226, 183, 104, 0.18);
+      background: linear-gradient(180deg, rgba(8, 10, 13, 0.98) 0%, rgba(8, 10, 13, 0.75) 100%);
+      backdrop-filter: blur(14px);
+      z-index: 50;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 1.4rem;
+    }
+
+    .badge-usp {
+      font-family: var(--font-title);
+      font-size: 0.85rem;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      color: var(--gold-primary);
+      padding: 6px 14px;
+      border: 1px solid var(--border-gold);
+      border-radius: 4px;
+      background: rgba(226, 183, 104, 0.08);
+      box-shadow: 0 0 15px rgba(226, 183, 104, 0.15);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.25s ease;
+    }
+
+    .badge-usp:hover {
+      background: var(--gold-primary);
+      color: #080a0d;
+      border-color: #ffffff;
+      box-shadow: 0 0 20px rgba(226, 183, 104, 0.6);
+      transform: translateY(-2px);
+    }
+
+    .badge-usp .home-hint {
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      opacity: 0.75;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .academic-meta-group {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .dept-title {
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+    }
+
+    .people-title {
+      font-size: 0.84rem;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .people-title strong {
+      color: var(--gold-light);
+      font-weight: 600;
+    }
+
+    .people-separator {
+      color: var(--border-gold);
+      font-size: 0.75rem;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 1.4rem;
+    }
+
+    .slide-counter {
+      font-family: var(--font-title);
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--gold-primary);
+      letter-spacing: 0.12em;
+    }
+
+    .btn-icon {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(226, 183, 104, 0.25);
+      color: var(--gold-light);
+      padding: 7px 14px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.82rem;
+      font-family: var(--font-body);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.25s ease;
+    }
+
+    .btn-icon:hover {
+      background: rgba(226, 183, 104, 0.2);
+      border-color: var(--gold-primary);
+      color: #fff;
+      box-shadow: 0 0 12px rgba(226, 183, 104, 0.35);
+    }
+
+    /* Viewport do Slideshow Horizontal */
+    main.slides-viewport {
+      flex: 1;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+      z-index: 10;
+    }
+
+    section.slide-stage {
+      width: 100vw;
+      height: 100vh;
+      flex-shrink: 0;
+      padding: 92px 3rem 72px 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+      opacity: 0.25;
+      transform: scale(0.96);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    section.slide-stage.active {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* Card Central 16:9 Split */
+    .slide-card-container {
+      width: 100%;
+      max-width: 1600px;
+      height: calc(100vh - 164px);
+      display: grid;
+      grid-template-columns: 1.15fr 1.35fr;
+      gap: 2.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-gold);
+      border-radius: 14px;
+      padding: 2.2rem;
+      box-shadow: 0 26px 70px rgba(0, 0, 0, 0.75), 0 0 45px var(--accent-glow);
+      backdrop-filter: blur(18px);
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Coluna Visual (Imagem / Mapas) */
+    .slide-visual {
+      position: relative;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid rgba(226, 183, 104, 0.25);
+      box-shadow: 0 14px 35px rgba(0, 0, 0, 0.65);
+      background: #040507;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .slide-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 1.2s cubic-bezier(0.1, 1, 0.1, 1);
+    }
+
+    section.slide-stage.active .slide-visual img {
+      transform: scale(1.02);
+    }
+
+    .visual-overlay-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 1.1rem 1.4rem;
+      background: linear-gradient(0deg, rgba(6, 8, 12, 0.96) 0%, rgba(6, 8, 12, 0.45) 75%, transparent 100%);
+      font-family: var(--font-quote);
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--gold-light);
+      line-height: 1.35;
+      border-top: 1px solid rgba(226, 183, 104, 0.18);
+      z-index: 2;
+    }
+
+    /* Alternador de Imagem / Mapa no Slide 4 */
+    .map-toggle-bar {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      right: 14px;
+      display: flex;
+      gap: 10px;
+      z-index: 10;
+    }
+
+    .btn-toggle-view {
+      flex: 1;
+      padding: 7px 12px;
+      border-radius: 6px;
+      background: rgba(8, 10, 13, 0.88);
+      border: 1px solid var(--border-gold);
+      color: var(--gold-light);
+      font-family: var(--font-title);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    }
+
+    .btn-toggle-view.active,
+    .btn-toggle-view:hover {
+      background: var(--gold-primary);
+      color: #080a0d;
+      border-color: #fff;
+    }
+
+    /* Coluna Teórica */
+    .slide-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow-y: auto;
+      padding-right: 0.8rem;
+    }
+
+    .slide-content::-webkit-scrollbar {
+      width: 5px;
+    }
+    .slide-content::-webkit-scrollbar-thumb {
+      background: rgba(226, 183, 104, 0.3);
+      border-radius: 4px;
+    }
+
+    .eixo-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-title);
+      font-size: 0.88rem;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .eixo-tag::before {
+      content: '';
+      width: 9px;
+      height: 9px;
+      background: var(--gold-primary);
+      border-radius: 50%;
+      display: inline-block;
+      box-shadow: 0 0 8px var(--gold-primary);
+    }
+
+    h2.slide-title {
+      font-family: var(--font-title);
+      font-size: 2.3rem;
+      font-weight: 800;
+      line-height: 1.2;
+      color: #fff;
+      margin-bottom: 1.1rem;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+    }
+
+    h2.slide-title span.highlight {
+      color: var(--gold-primary);
+    }
+
+    /* Bloco de Citação Principal (Com Capacidade de Zoom) */
+    .theory-quote-box {
+      border-left: 4px solid var(--gold-primary);
+      background: rgba(226, 183, 104, 0.08);
+      padding: 1.1rem 1.4rem;
+      margin-bottom: 1.3rem;
+      border-radius: 0 8px 8px 0;
+      cursor: zoom-in;
+      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+      position: relative;
+    }
+
+    .theory-quote-box:hover {
+      background: rgba(226, 183, 104, 0.15);
+      border-color: #fff;
+      transform: translateX(4px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .zoom-hint-badge {
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      opacity: 0.7;
+    }
+
+    .theory-quote-box:hover .zoom-hint-badge {
+      color: var(--gold-light);
+      opacity: 1;
+    }
+
+    .theory-quote-text {
+      font-family: var(--font-quote);
+      font-size: 1.42rem;
+      font-style: italic;
+      color: #ffffff;
+      line-height: 1.4;
+      margin-bottom: 0.45rem;
+    }
+
+    .theory-citation-tag {
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: var(--gold-primary);
+      text-transform: uppercase;
+    }
+
+    /* Argumentação Densa */
+    .argument-body {
+      font-size: 1.18rem;
+      line-height: 1.68;
+      color: var(--text-main);
+      margin-bottom: 1.4rem;
+      text-align: justify;
+    }
+
+    /* Cards Menores (Key Points) com Interatividade de ZOOM */
+    .key-points-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.1rem;
+      margin-top: auto;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(226, 183, 104, 0.16);
+    }
+
+    .key-point-item {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(226, 183, 104, 0.16);
+      border-radius: 8px;
+      padding: 0.95rem 1.1rem;
+      cursor: zoom-in;
+      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+      position: relative;
+    }
+
+    .key-point-item:hover {
+      background: rgba(226, 183, 104, 0.12);
+      border-color: var(--gold-primary);
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), 0 0 15px rgba(226, 183, 104, 0.25);
+    }
+
+    .key-point-item .zoom-icon {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      font-size: 0.75rem;
+      color: var(--gold-dim);
+      opacity: 0.6;
+    }
+
+    .key-point-item:hover .zoom-icon {
+      color: var(--gold-light);
+      opacity: 1;
+    }
+
+    .point-title {
+      font-family: var(--font-title);
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--gold-primary);
+      letter-spacing: 0.06em;
+      margin-bottom: 0.4rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .point-desc {
+      font-size: 0.98rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    /* Modal de Zoom Dinâmico em Tela Cheia (Lente de Projeção) */
+    .zoom-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(4, 5, 8, 0.88);
+      backdrop-filter: blur(16px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+      padding: 2rem;
+    }
+
+    .zoom-modal-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .zoom-modal-card {
+      width: 100%;
+      max-width: 920px;
+      background: #11151d;
+      border: 2px solid var(--gold-primary);
+      border-radius: 12px;
+      padding: 2.8rem 3.2rem;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9), 0 0 50px rgba(226, 183, 104, 0.35);
+      position: relative;
+      transform: scale(0.9);
+      transition: transform 0.35s cubic-bezier(0.2, 1, 0.3, 1);
+    }
+
+    .zoom-modal-backdrop.open .zoom-modal-card {
+      transform: scale(1);
+    }
+
+    .zoom-close-btn {
+      position: absolute;
+      top: 18px;
+      right: 22px;
+      background: transparent;
+      border: none;
+      color: var(--gold-primary);
+      font-size: 1.6rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: color 0.2s ease;
+    }
+
+    .zoom-close-btn:hover {
+      color: #fff;
+    }
+
+    .zoom-badge-title {
+      font-family: var(--font-title);
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--gold-primary);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .zoom-content-text {
+      font-family: var(--font-body);
+      font-size: 1.45rem;
+      line-height: 1.65;
+      color: #f7fafc;
+      text-align: justify;
+    }
+
+    .zoom-content-quote {
+      font-family: var(--font-quote);
+      font-size: 1.95rem;
+      font-style: italic;
+      line-height: 1.45;
+      color: var(--gold-light);
+      margin-bottom: 1.2rem;
+    }
+
+    /* Modal de Zoom Cartográfico (Alta Resolução) */
+    .map-zoom-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(3, 4, 6, 0.94);
+      backdrop-filter: blur(20px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 120;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+      padding: 1.5rem;
+    }
+
+    .map-zoom-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .map-zoom-container {
+      width: 95vw;
+      height: 90vh;
+      display: flex;
+      flex-direction: column;
+      background: #090c10;
+      border: 2px solid var(--gold-primary);
+      border-radius: 12px;
+      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.95), 0 0 60px rgba(226, 183, 104, 0.35);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .map-zoom-header {
+      height: 54px;
+      padding: 0 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(226, 183, 104, 0.25);
+      background: rgba(16, 20, 28, 0.95);
+    }
+
+    .map-zoom-title {
+      font-family: var(--font-title);
+      font-size: 0.95rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      color: var(--gold-primary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .map-zoom-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-map-control {
+      background: rgba(226, 183, 104, 0.12);
+      border: 1px solid var(--border-gold);
+      color: var(--gold-light);
+      padding: 6px 14px;
+      border-radius: 4px;
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-map-control:hover {
+      background: var(--gold-primary);
+      color: #080a0d;
+      box-shadow: 0 0 12px rgba(226, 183, 104, 0.4);
+    }
+
+    .map-zoom-viewport {
+      flex: 1;
+      overflow: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #040608;
+      cursor: grab;
+      position: relative;
+      padding: 1rem;
+    }
+
+    .map-zoom-viewport:active {
+      cursor: grabbing;
+    }
+
+    .map-zoom-viewport img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      border-radius: 6px;
+      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.85);
+      cursor: zoom-in;
+    }
+
+    .map-zoom-viewport img.magnified {
+      max-width: none;
+      max-height: none;
+      width: 180%;
+      cursor: zoom-out;
+    }
+
+    .map-zoom-footer {
+      height: 42px;
+      padding: 0 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid rgba(226, 183, 104, 0.2);
+      background: rgba(16, 20, 28, 0.95);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* Layout Específico para o Slide 10 (Bibliografia) */
+    .biblio-slide-layout {
+      grid-column: span 2;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      overflow-y: auto;
+    }
+
+    .biblio-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 0.8rem;
+    }
+
+    .biblio-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-gold);
+      border-radius: 10px;
+      padding: 1.5rem;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
+    }
+
+    .biblio-category {
+      font-family: var(--font-title);
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--gold-primary);
+      letter-spacing: 0.12em;
+      margin-bottom: 1rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid rgba(226, 183, 104, 0.22);
+    }
+
+    .biblio-item {
+      font-size: 1.08rem;
+      line-height: 1.6;
+      color: var(--text-main);
+      margin-bottom: 1rem;
+      padding-left: 1.2rem;
+      position: relative;
+    }
+
+    .biblio-item::before {
+      content: '◆';
+      position: absolute;
+      left: 0;
+      color: var(--gold-primary);
+      font-size: 0.75rem;
+      top: 4px;
+    }
+
+    .biblio-item strong {
+      color: var(--gold-light);
+    }
+
+    /* Rodapé Institucional com Navegação */
+    footer.mira-footer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 68px;
+      padding: 0 2.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(0deg, rgba(8, 10, 13, 0.98) 0%, rgba(8, 10, 13, 0.7) 100%);
+      border-top: 1px solid rgba(226, 183, 104, 0.18);
+      backdrop-filter: blur(14px);
+      z-index: 50;
+    }
+
+    .indicators-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .indicator-pill {
+      height: 6px;
+      width: 30px;
+      background: rgba(255, 255, 255, 0.18);
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .indicator-pill.active {
+      background: var(--gold-primary);
+      width: 58px;
+      box-shadow: 0 0 12px rgba(226, 183, 104, 0.7);
+    }
+
+    .nav-buttons-group {
+      display: flex;
+      align-items: center;
+      gap: 1.1rem;
+    }
+
+    .btn-nav {
+      background: rgba(226, 183, 104, 0.08);
+      border: 1px solid var(--border-gold);
+      color: var(--gold-primary);
+      padding: 9px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: var(--font-title);
+      font-size: 0.95rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.25s ease;
+    }
+
+    .btn-nav:hover:not(:disabled) {
+      background: var(--gold-primary);
+      color: #080a0d;
+      box-shadow: 0 0 18px rgba(226, 183, 104, 0.5);
+    }
+
+    .btn-nav:disabled {
+      opacity: 0.25;
+      cursor: not-allowed;
+      border-color: rgba(255, 255, 255, 0.1);
+      color: var(--text-dim);
+    }
+
+    .hint-keys {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    kbd {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 4px;
+      padding: 2px 7px;
+      font-family: monospace;
+      font-size: 0.75rem;
+      color: var(--gold-light);
+    }
+
+    @media (max-width: 1200px) {
+      .slide-card-container {
+        grid-template-columns: 1fr;
+        height: auto;
+        max-height: calc(100vh - 160px);
+        overflow-y: auto;
+      }
+      .slide-visual {
+        height: 320px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Cabeçalho Oficial USP com Discente e Orientador -->
+  <header class="mira-header">
+    <div class="brand-group">
+      <div class="badge-usp" onclick="goToSlide(1)" title="Voltar ao Início / Capa (Slide 1)" role="button" tabindex="0">
+        <span>🏛️ FFLCH • USP</span>
+        <span class="home-hint">⌂ Início</span>
+      </div>
+      <div class="academic-meta-group">
+        <div class="dept-title">Departamento de Letras Orientais • Área de Estudos Judaicos • Iniciação Científica</div>
+        <div class="people-title">
+          <span>Discente: <strong>Eduardo Neri</strong> (Letras - Hebraico)</span>
+          <span class="people-separator">|</span>
+          <span>Orientador: <strong>Prof. Dr. Luis Sérgio Krausz</strong></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <div class="slide-counter" id="slideCounter">01 / 10</div>
+      <button class="btn-icon" id="btnFullscreen" title="Tela Cheia (F)">
+        <span>⛶</span> Tela Cheia
+      </button>
+    </div>
+  </header>
+
+  <!-- Viewport dos Slides Horizontais -->
+  <main class="slides-viewport" id="slidesViewport">
+
+    <!-- SLIDE 01 -->
+    <section class="slide-stage active" data-slide="1">
+      <div class="slide-card-container">
+        <div class="slide-visual">
+          <img src="./slide_1_awakening.jpg" alt="A Faísca da Agência e a Matéria">
+          <div class="visual-overlay-caption">"A faísca da agência: a matéria inerte recebe o sopro teúrgico e a instrução cibernética."</div>
+        </div>
+        <div class="slide-content">
+          <div>
+            <div class="eixo-tag">Eixo 01 • Epistemologia e Ontologia</div>
+            <h2 class="slide-title">Do Barro ao Código: <span class="highlight">A Ontologia do Autômato</span></h2>
+            
+            <div class="theory-quote-box" onclick="openZoomModal('Ancoragem Epistemológica • Norbert Wiener', '&quot;Todo ato de conferir agência a um artefato acarreta a perda de controle por parte do artífice e a impossibilidade de subordinar a criatura a uma obediência cega.&quot;', '(WIENER, 1968, p. 45)', 'A tese de Wiener estabelece que qualquer sistema capaz de aprender e interagir com o ambiente escapa à determinação estrita de seu programador. O rabino ou o engenheiro que cria o Golem/autômato é confrontado com a ironia do feitiço que se desdobra em contingência e insubordinação.')">
+              <span class="zoom-hint-badge">🔍 Clique p/ Zoom</span>
+              <p class="theory-quote-text">"Todo ato de conferir agência a um artefato acarreta a perda de controle por parte do artífice e a impossibilidade de subordinar a criatura a uma obediência cega."</p>
+              <div class="theory-citation-tag">(WIENER, 1968, p. 45)</div>
+            </div>
+
+            <p class="argument-body">
+              A pesquisa investiga o mito do Golem não apenas como uma narrativa folclórica arcaica, mas como uma alegoria fundacional sobre a técnica e a autonomia. Ao contrapor a tradição talmúdico-cabalística da animação da argila (IDEL, 1990) à teoria dos sistemas autorreprodutivos de Norbert Wiener (1968), evidencia-se que o verdadeiro horror demiúrgico reside no despertar imprevisto da consciência do artefato.
+            </p>
+          </div>
+
+          <div class="key-points-grid">
+            <div class="key-point-item" onclick="openZoomModal('Conceito Teórico • Teurgia Talmúdica', '', '', 'A criação do homúnculo de barro nas fontes rabínicas e místicas (Sefer Yetzirah) operava como comprovação da virtude espiritual do teurgo. O ato de modelar e animar a matéria através da permutação das letras do alfabeto hebraico mimetizava a própria criação do cosmos por Deus (IDEL, 1990).')">
+              <span class="zoom-icon">🔍</span>
+              <div class="point-title">◆ Teurgia Talmúdica</div>
+              <div class="point-desc">A criação do homúnculo como exercício místico de exegese bíblica e manipulação das letras sagradas do Sefer Yetzirah.</div>
+            </div>
+            <div class="key-point-item" onclick="openZoomModal('Conceito Teórico • Paralaxe Cibernética', '', '', 'Ao tratar as máquinas autônomas sob a metáfora do Golem, Wiener demonstra que o problema da cibernética não é mecânico, mas ético. Quando o artefato assimila capacidade de decisão através do aprendizado com o ambiente, a autoridade do programador é desautorizada pela própria agência concedida (WIENER, 1968).')">
+              <span class="zoom-icon">🔍</span>
+              <div class="point-title">◆ Paralaxe Cibernética</div>
+              <div class="point-desc">O autômato que aprende rompe irrevogavelmente com o determinismo de seu programador original.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 02 -->
+    <section class="slide-stage" data-slide="2">
+      <div class="slide-card-container">
+        <div class="slide-visual">
+          <img src="./slide_2_prague.jpg" alt="Praga de Rodolfo II e o Golem">
+          <div class="visual-overlay-caption">"O gueto pragense sob Rodolfo II: o barro do rio Moldava erguido contra os libelos de sangue."</div>
+        </div>
+        <div class="slide-content">
+          <div>
+            <div class="eixo-tag">Eixo 02 • Historicidade e Autodefesa</div>
+            <h2 class="slide-title">O Gueto e a Lama: <span class="highlight">A Gênese Asquenaze</span></h2>
+            
+            <div class="theory-quote-box" onclick="openZoomModal('Ancoragem Histórica • Isaac B. Singer', '&quot;O escritor recupera a Praga histórica do imperador Rodolfo II — epicentro real de ocultismo e alquimia associado ao Maharal — e o combate às tramas persecutórias.&quot;', '(SINGER, 1989; IDEL, 1990)', 'Diferente da tradição cabalística puramente contemplativa, a lenda popularizada no século XIX e retomada por Singer ancora o Golem na carne viva do gueto de Praga, onde a sobrevivência física contra as acusações de infanticídio ritual (libelos de sangue) justificava a violação do repouso da matéria.')">
+              <span class="zoom-hint-badge">🔍 Clique p/ Zoom</span>
+              <p class="theory-quote-text">"O escritor recupera a Praga histórica do imperador Rodolfo II — epicentro real de ocultismo e alquimia associado ao Maharal — e o combate às tramas persecutórias."</p>
+              <div class="theory-citation-tag">(SINGER, 1989; IDEL, 1990)</div>
+            </div>
+
+            <p class="argument-body">
+              Na tradição asquenaze da Europa Central, o Golem sofre uma mutação pragmática decisiva: deixa de ser um exercício contemplativo para tornar-se uma muralha física. Na corte imperial de Rodolfo II (1576–1612), onde conviviam astrônomos e alquimistas, o rabino Judah Loew ben Bezalel (o Maharal) é associado à criação do monstro de lama como resposta urgente às violentas acusações rituais e perseguições antissemitas.
+            </p>
+          </div>
+
+          <div class="key-points-grid">
+            <div class="key-point-item" onclick="openZoomModal('Contexto Histórico • A Praga de Rodolfo II', '', '', 'A corte habsburga em Praga acolheu Johannes Kepler, Tycho Brahe e inúmeros sábios herméticos. Nesse clima de fascínio pelo saber oculto, o Rabino Loew obteve audiência pessoal com o monarca em 1592, conferindo verossimilhança histórica à lenda da aliança protetora em favor da judiaria pragense.')">
+              <span class="zoom-icon">🔍</span>
+              <div class="point-title">◆ Pano de Fundo Real</div>
+              <div class="point-desc">O imperador Rodolfo II transformou Praga na capital do hermetismo europeu, conferindo tolerância e proteção aos sábios judeus.</div>
+            </div>
+            <div class="key-point-item" onclick="openZoomModal('Dimensão Hermenêutica • O Mito como Escudo', '', '', 'O Golem corporifica a fantasia de retaliação e defesa dos fracos contra os poderosos. Ele é a resposta muda e telúrica à fragilidade das minorias marginalizadas, que encontram no próprio pó da terra uma couraça de resistência biopolítica.')">
+              <span class="zoom-icon">🔍</span>
+              <div class="point-title">◆ O Mito como Resposta</div>
+              <div class="point-desc">O Golem corporifica a urgência da autodefesa armada diante da vulnerabilidade crônica da diáspora judaica.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 03 -->
+    <section class="slide-stage" data-slide="3">
+      <div class="slide-card-container">
+        <div class="slide-visual">
+          <img src="./slide_3_clay_fire.jpg" alt="Choque Ontológico entre Barro e Fogo">
+          <div class="visual-overlay-caption">"Choque de naturezas sobrenaturais: a solidez pesada da terra e a volúpia insubordinada do fogo."</div>
+        </div>
+        <div class="slide-content">
+          <div>
+            <div class="eixo-tag">Eixo 03 • Literatura Comparada</div>
+            <h2 class="slide-title">Choque Ontológico: <span class="highlight">O Barro e o Fogo</span></h2>
+            
+            <div class="theory-quote-box" onclick="openZoomModal('Perspectiva Comparatista • Tania Carvalhal', '&quot;Ao examinar a aproximação entre o Golem e o Jinni, a literatura comparada descortina a fricção insolúvel entre duas cosmologias orientais no exílio.&quot;', '(CARVALHAL, 1986; WECKER, 2015)', 'O diálogo intertextual promovido por Helene Wecker coloca em tensão duas linhagens sobrenaturais do Oriente Próximo. A criatura de barro e a criatura de fogo sintetizam os dilemas ontológicos da materialidade versus volatilidade.')">
+              <span class="zoom-hint-badge">🔍 Clique p/ Zoom</span>
+              <p class="theory-quote-text">"Ao examinar a aproximação entre o Golem e o Jinni, a literatura comparada descortina a fricção insolúvel entre duas cosmologias orientais no exílio."</p>
+              <div class="theory-citation-tag">(CARVALHAL, 1986; WECKER, 2015)</div>
+            </div>
+
+            <p class="argument-body">
+              Na obra de Helene Wecker (2015), o método comparativo expõe a oposição elementar entre a criatura judaica e a entidade árabe. A Golem Chava é moldada a partir do barro: é densa, prudente, orientada pelo dever, atenta aos perigos do mundo e presa à terra. Em contraste, o Jinni Ahmad é forjado do fogo sem fumaça: volátil, arrogante, avesso a limites e sedento por paixões sensoriais. A interação entre ambos desafia as fronteiras dogmáticas dos seus folclores de origem.
+            </p>
+          </div>
+
+          <div class="key-points-grid">
+            <div class="key-point-item" onclick="openZoomModal('Tipologia Elementar • A Matéria da Servidão', '', '', 'O barro é a substância da terra prometida e da mortalidade. O Golem sente nos ossos de cerâmica o imperativo da retidão e da vigília moral, temendo a própria força bruta e buscando a ordem social que justifique sua vida.')">
+              <span class="zoom-icon">🔍</span>
+              <div class="point-title">◆ A Matéria da Servidão</div>
+              <div class="point-desc">O barro requer mandamentos e sofre com a ausência de um mestre que lhe prescreva o caminho correto.</div>
+            </div>
+            <div class="key-point-item" onclick="openZoomModal('Tipologia Elementar • A Chama da Liberdade', '', '', 'O Jinni, preso por séculos num frasco de cobre e reduzido à forma humana na América, odeia a fragilidade da carne. Sua essência de fogo busca a desintegração dos laços e o gozo imediato da liberdade desimpedida.')">
+              <span class="zoom-icon">🔍</span>
+              <div class="point-title">◆ A Chama da Liberdade</div>
+              <div class="point-desc">O fogo recusa qualquer domesticidade e prefere a aniquilação à submissão a um desígnio exterior.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 04: GEOGRAFIA, DIÁSPORA E CARTOGRAFIA HISTÓRICA 1899 -->
+    <section class="slide-stage" data-slide="4">
+      <div class="slide-card-container">
+        <div class="slide-visual" id="slide4Visual">
+          <div class="map-toggle-bar">
+            <button class="btn-toggle-view active" id="btnShowMap" onclick="toggleSlide4View('map')">🗺️ Cartografia 1899 (David Rumsey)</button>
+            <button class="btn-toggle-view" id="btnShowCity" onclick="toggleSlide4View('city')">🏙️ Cenário Urbano (Manhattan 1899)</button>
+            <button class="btn-toggle-view" onclick="openMapZoomModal()" style="background: rgba(226, 183, 104, 0.25); color: #ffffff;" title="Examinar Mapa em Alta Resolução">🔍 Lupa / Zoom no Mapa</button>
+          </div>
+          <img id="imgSlide4" src="./slide_4_map_diaspora.jpg" alt="Cartografia Histórica da Diáspora Transatlântica 1899" onclick="openMapZoomModal()" style="cursor: zoom-in;" title="Clique para ampliar o mapa e examinar as rotas da Europa Central e do Levante">
+          <div class="visual-overlay-caption" id="captionSlide4">"David Rumsey Collection: As rotas marítimas de emigração da Europa Central (Praga) e do Levante Sírio convergindo para o Porto de Nova York. (Clique para Zoom)"</div>
+        </div>
+        <div class="slide-content">
+          <div>
+            <div class="eixo-tag">Eixo 04 • Cartografia, Diáspora e Espaço</div>
+            <h2 class="slide-title">Diáspora e o Novo Mundo: <span class="highlight">Cartografia de 1899</span></h2>
+            
+            <div class="theory-quote-box" onclick="openZoomModal('Cartografia Documental • Linda K. Jacobs', '&quot;Articulando o gueto judaico do Lower East Side ao enclave histórico e real da comunidade árabe de Little Syria, outrora sediada em Washington Street.&quot;', '(JACOBS, 2015; RUMSEY MAP COLLECTION, 1899)', 'A cartografia histórica de 1899 revela a surpreendente contiguidade espacial em Lower Manhattan: os imigrantes asquenazes de língua iídiche ocupavam a malha densa de cortiços a leste da Bowery, enquanto os imigrantes do Levante Otomano fundavam a primeira colônia árabe americana em Washington Street (Ward 1), separados apenas por uma breve caminhada através de Manhattan.')">
+              <span class="zoom-hint-badge">🔍 Clique p/ Zoom</span>
+              <p class="theory-quote-text">"Articulando o gueto judaico ao enclave histórico e real da comunidade árabe de Little Syria, outrora sediada em Washington Street."</p>
+              <div class="theory-citation-tag">(JACOBS, 2015; WECKER, 2015)</div>
+            </div>
+
+            <p class="argument-body">
+              A pesquisa espacial ancora-se na cartografia de época (circa 1899, preservada na <em>David Rumsey Map Collection</em>). Os vapores transatlânticos das linhas alemãs e francesas (HAPAG, Norddeutscher Lloyd, Cunard) realizavam a travessia de 14 dias ligando os portos europeus (Hamburgo, Bremen, Gênova) a Nova York. No romance, esse vetor cartográfico desterritorializa os mitos: Chava e Ahmad cruzam o oceano e aportam em Manhattan sem mestres, onde o Lower East Side e Little Syria formam uma nova cartografia da alteridade.
+            </p>
+          </div>
+
+          <div class="key-points-grid">
+            <div class="key-point-item" onclick="openZoomModal('Topografia Histórica • Little Syria (Washington St.)', '', '', 'A historiadora Linda K. Jacobs (2015) documentou que Little Syria, concentrada em Washington Street ao sul da atual área do World Trade Center, foi o epicentro cultural do mundo árabe nos EUA, abrigando cafés, prensas de linotipo em idioma árabe e intelectuais como Kahlil Gibran.')">
+              <span class="zoom-icon">🔍</span>
+              <div class="point-title">◆ Little Syria Real</div>
+              <div class="point-desc">Enclave comercial e literário vibrante fundado na década de 1880 em Lower Manhattan por cristãos e muçulmanos do Império Otomano.</div>
+            </div>
+            <div class="key-point-item" onclick="openZoomModal('Cartografia da Desterritorialização', '', '', 'A travessia marítima funciona como um divisor de águas epistêmico: a velha autoridade comunitária do gueto e da aldeia dissolve-se no oceano. O Golem e o Jinni chegam à América como sujeitos desprovidos de linhagem oficial, obrigados a negociar a sobrevivência como proletários urbanos.')">
+              <span class="zoom-icon">🔍</span>
+              <div class="point-title">◆ A Ruptura Transatlântica</div>
+              <div class="point-desc">As rotas oceânicas documentadas no mapa representam a passagem da tradição teológica fechada para a experiência cosmopolita secular.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 05 -->
+    <section class="slide-stage" data-slide="5">
+      <div class="slide-card-container">
+        <div class="slide-visual">
+          <img src="./slide_5_wiener.jpg" alt="Pergaminho sagrado e circuitos cibernéticos">
+          <div class="visual-overlay-caption">"A paralaxe de Wiener: engrenagens cibernéticas e textos sagrados sob a mesma crise de controle."</div>
+        </div>
+        <div class="slide-content">
+          <div>
+            <div class="eixo-tag">Eixo 05 • Teoria Cibernética</div>
+            <h2 class="slide-title">Deus & Golem, Cia.: <span class="highlight">A Perda do Monopólio</span></h2>
+            
+            <div class="theory-quote-box" onclick="openZoomModal('Crítica Cibernética • Norbert Wiener', '&quot;Deus criou o homem à sua própria imagem. Se criarmos uma máquina à nossa imagem, ela não será menos perigosa do que nós próprios fomos para Deus.&quot;', '(WIENER, 1968, p. 82)', 'O ensaio clássico de Wiener une a cibernética nascente à mística judaica para diagnosticar a soberba tecnocrática moderna. O autômato que aprende através de loops de feedback não se subordina à moralidade pré-fixada pelo criador.')">
+              <span class="zoom-hint-badge">🔍 Clique p/ Zoom</span>
+              <p class="theory-quote-text">"Deus criou o homem à sua própria imagem. Se criarmos uma máquina à nossa imagem, ela não será menos perigosa do que nós próprios fomos para Deus."</p>
+              <div class="theory-citation-tag">(WIENER, 1968, p. 82)</div>
+            </div>
+
+            <p class="argument-body">
+              Norbert Wiener, o pai da cibernética, utilizou a figura cabalística do Golem para formular um dos mais lúcidos avisos éticos do século XX. O ensaio demonstra que a máquina programada com capacidade de autoaprendizado reproduz com exatidão a tragédia rabínica: assim que a máquina começa a interpretar suas próprias regras, o operador humano perde a capacidade de prever ou anular as decisões do sistema criado.
+            </p>
+          </div>
+
+          <div class="key-points-grid">
+            <div class="key-point-item" onclick="openZoomModal('Paradoxo Cibernético • O Servo Autônomo', '', '', 'Para que um sistema responda com agilidade às contingências do mundo real, o operador é obrigado a delegar-lhe liberdade de decisão. Todavia, a liberdade necessária ao desempenho da máquina é precisamente a fresta por onde penetra a imprevisibilidade.')">
+              <span class="zoom-icon">🔍</span>
+              <div class="point-title">◆ O Paradoxo do Servo</div>
+              <div class="point-desc">Para ser eficiente, o artefato precisa de autonomia; mas ao receber autonomia, o artefato destrói a servidão.</div>
+            </div>
+            <div class="key-point-item" onclick="openZoomModal('Advertência Humanista • Limites da Técnica', '', '', 'Wiener refuta a fé cega nos aparatos automáticos de defesa ou governança. Confiar a paz social ou a segurança a algoritmos ou a guardiões de barro equivale a transferir a responsabilidade humana a agentes incapazes de piedade.')">
+              <span class="zoom-icon">🔍</span>
+              <div class="point-title">◆ A Lição Humanista</div>
+              <div class="point-desc">A ilusão tecnocrática de dominar plenamente as criações esbarra no limite intransponível da entropia moral.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 06 -->
+    <section class="slide-stage" data-slide="6">
+      <div class="slide-card-container">
+        <div class="slide-visual">
+          <img src="./slide_6_tragic.jpg" alt="Rosto de barro rachando com olho humano melancólico">
+          <div class="visual-overlay-caption">"O sofrimento do barro: o despertar de afetos e melancolia na casca inanimada que não pediu para nascer."</div>
+        </div>
+        <div class="slide-content">
+          <div>
+            <div class="eixo-tag">Eixo 06 • Crítica Textual e Tragédia</div>
+            <h2 class="slide-title">A Melancolia do Ser: <span class="highlight">Isaac Bashevis Singer</span></h2>
+            
+            <div class="theory-quote-box" onclick="openZoomModal('Crítica Textual • Isaac B. Singer', '&quot;O Golem não era mais apenas força bruta; ele olhava para o céu, escutava os pássaros e sentia o frio da solidão que nenhum comando rabínico podia aquecer.&quot;', '(SINGER, 1989, p. 64)', 'Na prosa de Singer, o hebraico e o iídiche entrelaçam-se para expor a piedade pelo ser imperfeito. O Golem apaixona-se por Miriam, anseia pela ternura humana e chora lágrimas de poeira, desnudando a leviandade do rabino que brincou de Deus sem calcular a dor da criatura.')">
+              <span class="zoom-hint-badge">🔍 Clique p/ Zoom</span>
+              <p class="theory-quote-text">"O Golem não era mais apenas força bruta; ele olhava para o céu, escutava os pássaros e sentia o frio da solidão que nenhum comando rabínico podia aquecer."</p>
+              <div class="theory-citation-tag">(SINGER, 1989, p. 64)</div>
+            </div>
+
+            <p class="argument-body">
+              Na releitura lírica de Isaac Bashevis Singer (1989), a criatura de Praga não é um monstro insano, mas um ser profundamente comovente e trágico. Dotado de audição e visão, mas privado da fala e da alma imortal, o autômato descobre o amor e a tristeza ao fitar as mulheres do gueto e as crianças que o temem. O Golem de Singer sofre com a crueldade ontológica de ter sido arrancado do descanso eterno da argila para cumprir uma tarefa violenta.
+            </p>
+          </div>
+
+          <div class="key-points-grid">
+            <div class="key-point-item" onclick="openZoomModal('Crítica ao Criador • A Falência do Rabino', '', '', 'O rabino Loew de Singer é atormentado pelo remorso. Ele compreende que dar consciência sem dar fala e dar força sem dar amor é um suplício imperdoável imposto a um inocente que jamais pediu para abandonar o leito do rio.')">
+              <span class="zoom-icon">🔍</span>
+              <div class="point-title">◆ A Falência do Rabino</div>
+              <div class="point-desc">O Maharal percebe com culpa que cometeu uma violência espiritual ao invocar a sensibilidade sem conceder plenitude humana.</div>
+            </div>
+            <div class="key-point-item" onclick="openZoomModal('Condição de Exílio • O Estrangeiro Radical', '', '', 'O corpo gigantesco de barro funciona como o emblema supremo da diáspora judaica na Europa: amado quando defende a comunidade, mas temido e segregado assim que a crise cessa.')">
+              <span class="zoom-icon">🔍</span>
+              <div class="point-title">◆ A Inadequação Existencial</div>
+              <div class="point-desc">A tragédia judaica do exílio manifesta-se no próprio corpo da criatura: um estrangeiro absoluto em qualquer terra.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 07 -->
+    <section class="slide-stage" data-slide="7">
+      <div class="slide-card-container">
+        <div class="slide-visual">
+          <img src="./slide_7_emancipation.jpg" alt="Chava quebrando os laços invisíveis e apagando o Emet">
+          <div class="visual-overlay-caption">"A quebra do Emet: a recusa da submissão encomendada e o nascimento da mulher autônoma."</div>
+        </div>
+        <div class="slide-content">
+          <div>
+            <div class="eixo-tag">Eixo 07 • Subversão Feminista</div>
+            <h2 class="slide-title">A Emancipação do Barro: <span class="highlight">Helene Wecker</span></h2>
+            
+            <div class="theory-quote-box" onclick="openZoomModal('Subversão Temática • Helene Wecker', '&quot;Encomenda-se uma esposa perfeita de barro que jamais pudesse contestar; mas com a morte do artífice no mar, a Golem descobre o poder vertiginoso de dizer \'não\'.&quot;', '(WECKER, 2015)', 'Wecker subverte séculos de tradição rabínica androcêntrica. Ao transformar a criatura em uma mulher dotada de discernimento ético, a autora desconstrói a fantasia misógina da esposa autômata e a transforma em uma protagonista de sua própria sobrevivência.')">
+              <span class="zoom-hint-badge">🔍 Clique p/ Zoom</span>
+              <p class="theory-quote-text">"Encomenda-se uma esposa perfeita de barro que jamais pudesse contestar; mas com a morte do artífice no mar, a Golem descobre o poder vertiginoso de dizer 'não'."</p>
+              <div class="theory-citation-tag">(WECKER, 2015)</div>
+            </div>
+
+            <p class="argument-body">
+              Helene Wecker desconstrói radicalmente o cânone masculino do mito. Chava foi encomendada por um negociante arrogante que desejava uma companheira silenciosa e servis. Com o falecimento súbito do mestre no navio rumo à América, o contrato patriarcal é rompido antes mesmo de se consumar. Chava aprende a controlar sua força descomunal, adota o trabalho de padeira e passa a tomar decisões éticas fundamentadas na empatia e no autodomínio.
+            </p>
+          </div>
+
+          <div class="key-points-grid">
+            <div class="key-point-item" onclick="openZoomModal('Alegoria da Emancipação • A Golem como Mulher', '', '', 'A jornada de Chava espelha a dura emancipação das mulheres imigrantes na virada do século XX em Nova York: confinadas ao trabalho pesado nas fábricas e padarias, elas encontram na coletividade urbana a força para escapar das tutelas matrimoniais arcaicas.')">
+              <span class="zoom-icon">🔍</span>
+              <div class="point-title">◆ A Golem como Mulher</div>
+              <div class="point-desc">Metáfora contundente da condição feminina imigrante: domesticada pelas convenções, mas capaz de forjar a própria emancipação.</div>
+            </div>
+            <div class="key-point-item" onclick="openZoomModal('Ressignificação Cabalística • O Emet Ético', '', '', 'Ao invés de morrer ao ter a letra Aleph apagada da testa (transformando Emet em Met - morte), Chava aprende a apagar a subserviência e manter viva a verdade do compromisso moral com os desvalidos.')">
+              <span class="zoom-icon">🔍</span>
+              <div class="point-title">◆ A Verdade Redefinida</div>
+              <div class="point-desc">A inscrição cabalística 'Emet' deixa de significar lealdade canina ao criador e passa a significar autenticidade interior.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 08 -->
+    <section class="slide-stage" data-slide="8">
+      <div class="slide-card-container">
+        <div class="slide-visual">
+          <img src="./slide_8_alterity.jpg" alt="Chá árabe e café nova-iorquino sobre manuscritos">
+          <div class="visual-overlay-caption">"O encontro na alteridade: a harmonia improvável entre duas diásporas marginalizadas no Novo Mundo."</div>
+        </div>
+        <div class="slide-content">
+          <div>
+            <div class="eixo-tag">Eixo 08 • Convivência e Alteridade</div>
+            <h2 class="slide-title">O Encontro na Alteridade: <span class="highlight">Little Syria</span></h2>
+            
+            <div class="theory-quote-box" onclick="openZoomModal('Polifonia Cultural • Projeto de IC', '&quot;A fatura do romance estrutura-se de modo polifônico, articulando o gueto judaico à comunidade árabe de Little Syria mediante a aproximação entre Chava e Ahmad.&quot;', '(PROJETO IC; JACOBS, 2015; CARVALHAL, 1986)', 'A polifonia romanesca de Wecker desafia o essencialismo dos ódios sectários. A solidão partilhada entre o ser de argila e o ser de fogo demonstra que o convívio nas margens cosmopolitas é capaz de gerar solidariedades imprevistas pela história oficial.')">
+              <span class="zoom-hint-badge">🔍 Clique p/ Zoom</span>
+              <p class="theory-quote-text">"A fatura do romance estrutura-se de modo polifônico, articulando o gueto judaico à comunidade árabe de Little Syria mediante a aproximação entre Chava e Ahmad."</p>
+              <div class="theory-citation-tag">(PROJETO IC; JACOBS, 2015; CARVALHAL, 1986)</div>
+            </div>
+
+            <p class="argument-body">
+              Em vez de perpetuar a hostilidade herdada das disputas históricas do Oriente Médio ou da Europa, o romance de Wecker utiliza a condição de exílio para tecer uma densa tapeçaria de solidariedade. As noites em que a Golem (que não dorme) e o Jinni (que vagueia insone) caminham pelas ruas desertas de Nova York constituem um dos momentos mais ricos da literatura comparada contemporânea: duas alteridades radicais que se reconhecem no mesmo desabrigo.
+            </p>
+          </div>
+
+          <div class="key-points-grid">
+            <div class="key-point-item" onclick="openZoomModal('Diálogo Intercultural • Polifonia de Vozes', '', '', 'A mesa do café nova-iorquino onde repousam o bule de chá de hortelã levantino e a caneca de café do Lower East Side torna-se um laboratório de tolerância: tradições sufis e cabalísticas conversam através de suas criaturas exiladas.')">
+              <span class="zoom-icon">🔍</span>
+              <div class="point-title">◆ Polifonia Cultural</div>
+              <div class="point-desc">O diálogo entre provérbios iídiches e a sabedoria poética levantina produz uma síntese de tolerância secular.</div>
+            </div>
+            <div class="key-point-item" onclick="openZoomModal('Hermenêutica da Monstruosidade', '', '', 'Para a elite anglo-saxã da época, tanto o judeu asquenaze quanto o árabe sírio eram tratados como \'outros\' indesejáveis. Os monstros ficcionais espelham a estigmatização do imigrante real, desarmando o preconceito através da empatia.')">
+              <span class="zoom-icon">🔍</span>
+              <div class="point-title">◆ O Monstro como Espelho</div>
+              <div class="point-desc">O imigrante é visto pelo nativismo americano como um corpo estranho; a amizade entre os autômatos resgata sua humanidade.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 09 -->
+    <section class="slide-stage" data-slide="9">
+      <div class="slide-card-container">
+        <div class="slide-visual">
+          <img src="./slide_9_literature.jpg" alt="Livro antigo aberto iluminando uma cidade moderna">
+          <div class="visual-overlay-caption">"A permanência do signo: as letras do barro dissolvidas na luz duradoura da ficção literária."</div>
+        </div>
+        <div class="slide-content">
+          <div>
+            <div class="eixo-tag">Eixo 09 • Síntese Hermenêutica</div>
+            <h2 class="slide-title">O Texto como Resistência: <span class="highlight">A Força da Literatura</span></h2>
+            
+            <div class="theory-quote-box" onclick="openZoomModal('Síntese Teórica • Carvalhal & Auerbach', '&quot;A literatura comparada revela que o mito sobrevive não porque permanece idêntico, mas porque possui a maleabilidade necessária para absorver as novas feridas da história.&quot;', '(CARVALHAL, 1986; AUERBACH, 1971)', 'A mimesis literária não é cópia passiva, mas recriação crítica. O mito do Golem reconfigura-se a cada século como termômetro dos limites entre humanidade, máquina e poder.')">
+              <span class="zoom-hint-badge">🔍 Clique p/ Zoom</span>
+              <p class="theory-quote-text">"A literatura comparada revela que o mito sobrevive não porque permanece idêntico, mas porque possui a maleabilidade necessária para absorver as novas feridas da história."</p>
+              <div class="theory-citation-tag">(CARVALHAL, 1986; AUERBACH, 1971)</div>
+            </div>
+
+            <p class="argument-body">
+              A trajetória do mito demonstra que a literatura é a verdadeira guardiã da memória. Quando a argila se esfarela no sótão da sinagoga Velha-Nova de Praga e os rituais cabalísticos perdem sua eficácia mágica, a palavra escrita assume o trabalho demiúrgico. Ao recriar o Golem sob as lentes de Singer e Wecker, a literatura judaica contemporânea não apenas combate o esquecimento, mas ergue um monumento estético contra todas as formas de autoritarismo e desumanização.
+            </p>
+          </div>
+
+          <div class="key-points-grid">
+            <div class="key-point-item" onclick="openZoomModal('Monumento Verbal • A Sobrevivência Simbólica', '', '', 'Como ensina Erich Auerbach (1971), a representação da realidade na literatura ocidental sobrevive através da mutabilidade das formas. O código literário substitui a argila como repositório perene da memória coletiva judaica.')">
+              <span class="zoom-icon">🔍</span>
+              <div class="point-title">◆ Sobrevivência Simbólica</div>
+              <div class="point-desc">O Golem moderno deixa de ser arma de destruição e passa a ser metáfora da busca pela identidade.</div>
+            </div>
+            <div class="key-point-item" onclick="openZoomModal('Método Filológico • O Papel da Crítica Textual', '', '', 'O cotejo filológico e comparatista das variantes do mito permite identificar como as dores de cada geração — das fogueiras de Praga ao desenraizamento em Manhattan — são processadas pela imaginação literária.')">
+              <span class="zoom-icon">🔍</span>
+              <div class="point-title">◆ O Papel da Crítica Textual</div>
+              <div class="point-desc">Investigar as variantes da lenda permite compreender como cada época renegocia seus medos perante o avanço da tecnologia.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 10: BIBLIOGRAFIA COMPLETA E CRÉDITOS ACADÊMICOS -->
+    <section class="slide-stage" data-slide="10">
+      <div class="slide-card-container">
+        <div class="biblio-slide-layout">
+          <div class="eixo-tag">Eixo 10 • Fundamentação Científica & Créditos</div>
+          <h2 class="slide-title">Aparato Crítico: <span class="highlight">Referências Bibliográficas</span></h2>
+
+          <div class="biblio-grid">
+            <!-- Coluna 1 -->
+            <div class="biblio-card">
+              <div class="biblio-category">Corpus Literário Primário</div>
+              <div class="biblio-item">
+                <strong>SINGER, Isaac Bashevis.</strong> <em>O Golem.</em> Tradução de Carlos Nayfeld. São Paulo: Perspectiva, 1989.
+              </div>
+              <div class="biblio-item">
+                <strong>WECKER, Helene.</strong> <em>A Golem e o Jinni.</em> Tradução de Cláudia Guimarães. Rio de Janeiro: Darkside Books, 2015.
+              </div>
+
+              <div class="biblio-category" style="margin-top: 1.4rem;">Cibernética & Filosofia da Técnica</div>
+              <div class="biblio-item">
+                <strong>WIENER, Norbert.</strong> <em>Deus & Golem, Cia.: Um comentário sobre certos pontos em que a cibernética incide sobre a religião.</em> Tradução de Gita K. Guinsburg. São Paulo: Cultrix, 1968.
+              </div>
+            </div>
+
+            <!-- Coluna 2 -->
+            <div class="biblio-card">
+              <div class="biblio-category">Mística Judaica, Cartografia & História</div>
+              <div class="biblio-item">
+                <strong>IDEL, Moshe.</strong> <em>Golem: Jewish Magical and Mystical Traditions on the Artificial Anthropoid.</em> Albany: State University of New York Press, 1990.
+              </div>
+              <div class="biblio-item">
+                <strong>JACOBS, Linda K.</strong> <em>Strangers in the West: The Syrian Colony of New York City, 1880–1900.</em> New York: Kalimah Press, 2015.
+              </div>
+              <div class="biblio-item">
+                <strong>RUMSEY, David (Col.).</strong> <em>Historical Map Collection: Transatlantic Migration Routes & Lower Manhattan Atlases (1899–1900).</em> Stanford University Library.
+              </div>
+
+              <div class="biblio-category" style="margin-top: 1.4rem;">Literatura Comparada & Teoria Crítica</div>
+              <div class="biblio-item">
+                <strong>CARVALHAL, Tania Franco.</strong> <em>Literatura Comparada.</em> São Paulo: Ática, 1986.
+              </div>
+              <div class="biblio-item">
+                <strong>AUERBACH, Erich.</strong> <em>Mimesis: a representação da realidade na literatura ocidental.</em> São Paulo: Perspectiva, 1971.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Modal de Zoom em Alta Definição para Apresentação -->
+  <div class="zoom-modal-backdrop" id="zoomModal" onclick="closeZoomModal(event)">
+    <div class="zoom-modal-card" onclick="event.stopPropagation()">
+      <button class="zoom-close-btn" onclick="closeZoomModal()" title="Fechar (Esc)">✕</button>
+      <div class="zoom-badge-title" id="zoomBadgeTitle">◆ Argumento em Destaque</div>
+      <div class="zoom-content-quote" id="zoomQuoteText" style="display: none;"></div>
+      <div class="theory-citation-tag" id="zoomCitationTag" style="margin-bottom: 1.2rem; display: none;"></div>
+      <div class="zoom-content-text" id="zoomBodyText"></div>
+    </div>
+  </div>
+
+  <!-- Modal Dedicado de Zoom Cartográfico (David Rumsey 1899) -->
+  <div class="map-zoom-backdrop" id="mapZoomModal" onclick="closeMapZoomModal(event)">
+    <div class="map-zoom-container" onclick="event.stopPropagation()">
+      <div class="map-zoom-header">
+        <div class="map-zoom-title">
+          <span>🗺️ Cartografia Histórica da Diáspora (1899)</span>
+          <span style="color: var(--text-dim); font-size: 0.8rem; font-weight: 500;">David Rumsey Collection • Stanford University</span>
+        </div>
+        <div class="map-zoom-controls">
+          <button class="btn-map-control" id="btnMagnifyToggle" onclick="toggleMapMagnify()">🔍 Lupa (180%)</button>
+          <button class="btn-map-control" onclick="closeMapZoomModal()" title="Fechar (Esc)">✕ Fechar</button>
+        </div>
+      </div>
+      <div class="map-zoom-viewport" id="mapZoomViewport">
+        <img id="mapZoomImg" src="./slide_4_map_diaspora.jpg" alt="Mapa Histórico David Rumsey Ampliado" onclick="toggleMapMagnify()" title="Clique para alternar o zoom ampliado (100% / 180%)">
+      </div>
+      <div class="map-zoom-footer">
+        <div>Rotas transatlânticas a vapor (1899): Praga/Hamburgo (Europa Central) e Beirute/Alexandria (Levante Sírio) convergindo em Nova York.</div>
+        <div style="color: var(--gold-light);">Dica: Clique no mapa para alternar o zoom ou arraste com o mouse para inspecionar detalhes</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rodapé Institucional e Controles -->
+  <footer class="mira-footer">
+    <div class="hint-keys">
+      Navegação: <kbd>←</kbd> <kbd>→</kbd> ou <kbd>Espaço</kbd> | Tela Cheia: <kbd>F</kbd> | Fechar Zoom: <kbd>Esc</kbd>
+    </div>
+
+    <!-- Indicadores de Slide -->
+    <div class="indicators-bar" id="indicatorsBar">
+      <div class="indicator-pill active" onclick="goToSlide(1)"></div>
+      <div class="indicator-pill" onclick="goToSlide(2)"></div>
+      <div class="indicator-pill" onclick="goToSlide(3)"></div>
+      <div class="indicator-pill" onclick="goToSlide(4)"></div>
+      <div class="indicator-pill" onclick="goToSlide(5)"></div>
+      <div class="indicator-pill" onclick="goToSlide(6)"></div>
+      <div class="indicator-pill" onclick="goToSlide(7)"></div>
+      <div class="indicator-pill" onclick="goToSlide(8)"></div>
+      <div class="indicator-pill" onclick="goToSlide(9)"></div>
+      <div class="indicator-pill" onclick="goToSlide(10)"></div>
+    </div>
+
+    <div class="nav-buttons-group">
+      <button class="btn-nav" id="btnPrev" onclick="prevSlide()" disabled>◄ Anterior</button>
+      <button class="btn-nav" id="btnNext" onclick="nextSlide()">Próximo ►</button>
+    </div>
+  </footer>
+
+  <!-- Script de Interatividade, Alternador de Mapa e Lente de Zoom -->
+  <script>
+    let currentSlide = 1;
+    const totalSlides = 10;
+
+    const viewport = document.getElementById('slidesViewport');
+    const counter = document.getElementById('slideCounter');
+    const btnPrev = document.getElementById('btnPrev');
+    const btnNext = document.getElementById('btnNext');
+    const pills = document.querySelectorAll('.indicator-pill');
+    const slides = document.querySelectorAll('.slide-stage');
+
+    function updatePresentation() {
+      const translateX = -(currentSlide - 1) * 100;
+      viewport.style.transform = `translateX(${translateX}vw)`;
+
+      const formattedCurrent = currentSlide.toString().padStart(2, '0');
+      const formattedTotal = totalSlides.toString().padStart(2, '0');
+      counter.textContent = `${formattedCurrent} / ${formattedTotal}`;
+
+      btnPrev.disabled = currentSlide === 1;
+      btnNext.disabled = currentSlide === totalSlides;
+
+      pills.forEach((pill, idx) => {
+        if (idx + 1 === currentSlide) {
+          pill.classList.add('active');
+        } else {
+          pill.classList.remove('active');
+        }
+      });
+
+      slides.forEach((slide, idx) => {
+        if (idx + 1 === currentSlide) {
+          slide.classList.add('active');
+        } else {
+          slide.classList.remove('active');
+        }
+      });
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides) {
+        currentSlide++;
+        updatePresentation();
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 1) {
+        currentSlide--;
+        updatePresentation();
+      }
+    }
+
+    function goToSlide(n) {
+      if (n >= 1 && n <= totalSlides) {
+        currentSlide = n;
+        updatePresentation();
+      }
+    }
+
+    // Alternador de Visualização do Slide 4 (Mapa David Rumsey vs Cenário Urbano)
+    function toggleSlide4View(view) {
+      const img = document.getElementById('imgSlide4');
+      const caption = document.getElementById('captionSlide4');
+      const btnMap = document.getElementById('btnShowMap');
+      const btnCity = document.getElementById('btnShowCity');
+
+      if (view === 'map') {
+        img.src = './slide_4_map_diaspora.jpg';
+        caption.textContent = '"David Rumsey Collection: As rotas marítimas de emigração da Europa Central (Praga) e do Levante Sírio convergindo para o Porto de Nova York. (Clique para Zoom)"';
+        btnMap.classList.add('active');
+        btnCity.classList.remove('active');
+      } else {
+        img.src = './slide_4_diaspora.jpg';
+        caption.textContent = '"Nova York (1899): o encontro das comunidades no Lower East Side judaico e em Little Syria (Washington Street). (Clique para Zoom)"';
+        btnCity.classList.add('active');
+        btnMap.classList.remove('active');
+      }
+    }
+
+    // Modal de Zoom Dinâmico (Lente de Projeção para Textos e Argumentos)
+    const zoomModal = document.getElementById('zoomModal');
+    const zoomBadgeTitle = document.getElementById('zoomBadgeTitle');
+    const zoomQuoteText = document.getElementById('zoomQuoteText');
+    const zoomCitationTag = document.getElementById('zoomCitationTag');
+    const zoomBodyText = document.getElementById('zoomBodyText');
+
+    function openZoomModal(title, quote, citation, body) {
+      zoomBadgeTitle.innerHTML = `◆ ${title}`;
+
+      if (quote && quote.trim() !== '') {
+        zoomQuoteText.innerHTML = quote;
+        zoomQuoteText.style.display = 'block';
+      } else {
+        zoomQuoteText.style.display = 'none';
+      }
+
+      if (citation && citation.trim() !== '') {
+        zoomCitationTag.textContent = citation;
+        zoomCitationTag.style.display = 'block';
+      } else {
+        zoomCitationTag.style.display = 'none';
+      }
+
+      zoomBodyText.innerHTML = body;
+      zoomModal.classList.add('open');
+    }
+
+    function closeZoomModal() {
+      zoomModal.classList.remove('open');
+    }
+
+    // Modal de Zoom do Mapa Cartográfico (David Rumsey)
+    const mapZoomModal = document.getElementById('mapZoomModal');
+    const mapZoomImg = document.getElementById('mapZoomImg');
+    const btnMagnifyToggle = document.getElementById('btnMagnifyToggle');
+
+    function openMapZoomModal() {
+      const imgSlide4 = document.getElementById('imgSlide4');
+      if (imgSlide4) {
+        mapZoomImg.src = imgSlide4.src;
+      }
+      mapZoomImg.classList.remove('magnified');
+      btnMagnifyToggle.textContent = '🔍 Lupa (180%)';
+      mapZoomModal.classList.add('open');
+    }
+
+    function closeMapZoomModal() {
+      mapZoomModal.classList.remove('open');
+      mapZoomImg.classList.remove('magnified');
+    }
+
+    function toggleMapMagnify() {
+      mapZoomImg.classList.toggle('magnified');
+      if (mapZoomImg.classList.contains('magnified')) {
+        btnMagnifyToggle.textContent = '🔍 Ajustar à Tela (100%)';
+      } else {
+        btnMagnifyToggle.textContent = '🔍 Lupa (180%)';
+      }
+    }
+
+    // Teclas de atalho para Apresentador
+    document.addEventListener('keydown', (e) => {
+      // Se algum modal estiver aberto, Esc fecha
+      if (mapZoomModal && mapZoomModal.classList.contains('open')) {
+        if (e.key === 'Escape') {
+          closeMapZoomModal();
+        }
+        return;
+      }
+
+      if (zoomModal && zoomModal.classList.contains('open')) {
+        if (e.key === 'Escape') {
+          closeZoomModal();
+        }
+        return;
+      }
+
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        prevSlide();
+      } else if (e.key === 'Home') {
+        e.preventDefault();
+        goToSlide(1);
+      } else if (e.key === 'End') {
+        e.preventDefault();
+        goToSlide(totalSlides);
+      } else if (e.key === 'f' || e.key === 'F') {
+        toggleFullscreen();
+      }
+    });
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => {
+          console.warn("Fullscreen request error:", err);
+        });
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      }
+    }
+
+    document.getElementById('btnFullscreen').addEventListener('click', toggleFullscreen);
+
+    // Inicialização
+    updatePresentation();
+  </script>
+</body>
+</html>
